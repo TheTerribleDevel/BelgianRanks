@@ -1,0 +1,104 @@
+/* Declaring Variables */
+
+:root {
+  --main-color : #005710;
+  --font-color: #FFF;
+  --form-color: #e6c493;
+}
+
+/* Containing elements */
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 1rem;
+  color: var(--font-color);
+  background-image: url("../bg-images/multicam.webp"), url("../bg-images/multicam.png");
+}
+
+header, footer {
+  background-color: #005710;
+  padding: 0.5rem;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+footer {
+  margin-top: auto;
+}
+
+main {
+  align-self: center;
+  width: 20%;
+}
+
+form {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--form-color);
+}
+
+/* regular tags */
+
+img {
+  max-width: 100%;
+}
+
+legend {
+  font-size: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+label, input {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+strong {
+  color: var(--main-color);
+}
+
+em {
+  color: #fc4c4c;
+}
+
+button {
+  display: block;
+  width: 50%;
+  margin: 0 auto 0.5rem;
+  color: var(--font-color);
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* IDs */
+
+#container {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+}
+
+#addImageDiv {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
