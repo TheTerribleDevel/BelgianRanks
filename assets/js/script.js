@@ -110,20 +110,21 @@ function makeAnswerMarine(oType, random0Number, letter) {
   }
 
   if (oType === "OR") {
-    if (random0Number < 3) {
-      _answer = _OR_RANKS_MARINE[random0Number + extraIdx];
-    } else if (random0Number < 5) {
-      _answer = _OR_RANKS_MARINE[random0Number + 1 + extraIdx];
+    console.log(random0Number);
+    if (random0Number < 5) {
+      _answer = _OR_RANKS_MARINE[random0Number - 2 + extraIdx];
+    } else if (random0Number < 7) {
+      _answer = _OR_RANKS_MARINE[random0Number - 1 + extraIdx];
     } else {
-      _answer = _OR_RANKS_MARINE[random0Number + 2 + extraIdx];
+      _answer = _OR_RANKS_MARINE[random0Number + extraIdx];
     }
   } else {
     if (random0Number < 1) {
-      _answer = _OFFICER_RANKS_MARINE[random0Number + extraIdx];
+      _answer = _OFFICER_RANKS_MARINE[random0Number - 1 + extraIdx];
     } else if (random0Number < 3) {
-      _answer = _OFFICER_RANKS_MARINE[random0Number + 1 + extraIdx];
+      _answer = _OFFICER_RANKS_MARINE[random0Number + extraIdx];
     } else {
-      _answer = _OFFICER_RANKS_MARINE[random0Number + 2 + extraIdx];
+      _answer = _OFFICER_RANKS_MARINE[random0Number + 1 + extraIdx];
     }
   }
 }
@@ -136,29 +137,30 @@ function makeAnswerNormal(oType, random0Number, letter) {
   }
 
   if (oType === "OR") {
-    if (random0Number < 3) {
-      _answer = _OR_RANKS[random0Number + extraIdx];
-    } else if (random0Number < 5) {
-      _answer = _OR_RANKS[random0Number + 1 + extraIdx];
+    console.log(random0Number);
+    if (random0Number < 5) {
+      _answer = _OR_RANKS[random0Number - 2 + extraIdx];
+    } else if (random0Number < 7) {
+      _answer = _OR_RANKS[random0Number - 1 + extraIdx];
     } else {
-      _answer = _OR_RANKS[random0Number + 2 + extraIdx];
+      _answer = _OR_RANKS[random0Number + extraIdx];
     }
   } else {
-    if (random0Number < 1) {
+    if (random0Number < 2) {
+      _answer = _OFFICER_RANKS[random0Number - 1 + extraIdx];
+    } else if (random0Number < 4) {
       _answer = _OFFICER_RANKS[random0Number + extraIdx];
-    } else if (random0Number < 3) {
-      _answer = _OFFICER_RANKS[random0Number + 1 + extraIdx];
     } else {
-      _answer = _OFFICER_RANKS[random0Number + 2 + extraIdx];
+      _answer = _OFFICER_RANKS[random0Number + 1 + extraIdx];
     }
   }
 }
 
 function answerSelection(randomComponent, oType, randomONumber, letter) {
   if (randomComponent === "Marine") {
-    return makeAnswerMarine(oType, randomONumber - 1, letter);
+    return makeAnswerMarine(oType, randomONumber, letter);
   } else {
-    return makeAnswerNormal(oType, randomONumber - 1, letter);
+    return makeAnswerNormal(oType, randomONumber, letter);
   }
 }
 
