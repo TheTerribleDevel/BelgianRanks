@@ -28,11 +28,11 @@ let _answer = "";
 document.addEventListener("DOMContentLoaded", init);
 
 function init(){
-  const $button = document.querySelector("button");
+  const $form = document.querySelector("form");
 
   displayImg()
 
-  $button.addEventListener("click", checkInput);
+  $form.addEventListener("submit", checkInput);
 }
 
 function needLetter(oType, randomONumber) {
