@@ -1,8 +1,8 @@
 "use strict";
 
-const _Components = ["LandLuchtMarineOR1.png", "Land", "Lucht", "Marine", "Medic", "SpecialeFuncties"];
-const _NatoOTypes = ["OR", "OF"];
-const _letters = ["a", "b"];
+const _COMPONENTS = ["LandLuchtMarineOR1.png", "Land", "Lucht", "Marine", "Medic", "SpecialeFuncties"];
+const _NATO_O_TYPES = ["OR", "OF"];
+const _LETTERS = ["a", "b"];
 
 const _OR_RANKS = [
   "1e Soldaat", "Korporaal", "Korporaal-Chef", "1e Korporaal-Chef", "Sergeant",
@@ -22,7 +22,9 @@ const _OFFICER_RANKS_MARINE = [
   "Korvetkapitein", "Fregatkapitein", "Kapitein-ter-zee", "Flottieljeadmiraal", "Divisieadmiraal", "Viceadmiraal",
   "Admiraal"
 ];
+const _RANKCOUNT = _OR_RANKS.length + _OFFICER_RANKS.length + _OR_RANKS_MARINE.length + _OFFICER_RANKS_MARINE.length;
 
+let _correctAnswers = [];
 let _answer = "";
 
 document.addEventListener("DOMContentLoaded", init);
@@ -38,11 +40,7 @@ function init(){
 function needLetter(oType, randomONumber) {
   if (oType === "OF" && (randomONumber === 1 || randomONumber === 3)) {
     return true;
-  } else if (oType === "OR" && (randomONumber === 4 || randomONumber === 6 || randomONumber === 9)){
-    return true;
-  } else {
-    return false;
-  }
+  } else return oType === "OR" && (randomONumber === 4 || randomONumber === 6 || randomONumber === 9);
 }
 
 function generateRandomONumber(oType) {
@@ -59,7 +57,7 @@ function addLetter(oType, randomONumber) {
   let letter = "";
 
   if (needLetter(oType, randomONumber)) {
-    letter = _letters[Math.floor(Math.random() * 2)];
+    letter = _LETTERS[Math.floor(Math.random() * 2)];
   }
   return letter;
 }
@@ -74,32 +72,41 @@ function colorInsignia(randomComponent, oType, randomONumber) {
 }
 
 function generateImgLink() {
-  const randomComponent = _Components[Math.floor(Math.random() * _Components.length)];
+  const randomComponent = _COMPONENTS[Math.floor(Math.random() * _COMPONENTS.length)];
   if (randomComponent !== "LandLuchtMarineOR1.png" && randomComponent !== "SpecialeFuncties") {
-    const oType = _NatoOTypes[Math.floor(Math.random() * 2)];
+    const oType = _NATO_O_TYPES[Math.floor(Math.random() * 2)];
     const randomONumber = generateRandomONumber(oType);
     const letter = addLetter(oType, randomONumber);
     const color = colorInsignia(randomComponent, oType, randomONumber);
     answerSelection(randomComponent, oType, randomONumber, letter);
 
-    return `images/${randomComponent}/${color}${randomComponent}${oType}${randomONumber}${letter}.png`;
+    if (_correctAnswers.includes(_answer)){
+      return generateImgLink();
+    } else {
+      return `images/${randomComponent}/${color}${randomComponent}${oType}${randomONumber}${letter}.png`;
+    }
   } else if (randomComponent === "SpecialeFuncties") {
     const specialRanks = ["CSM", "Defensieadjudant", "Korpskorporaal", "RSM"]
     const specialRank = specialRanks[Math.floor(Math.random() * 4)];
     _answer = specialRank;
-
-    return `images/${randomComponent}/${specialRank}.png`;
+    if (_correctAnswers.includes(_answer)){
+      return generateImgLink();
+    } else {
+      return `images/${randomComponent}/${specialRank}.png`;
+    }
   }else {
     _answer = "Soldaat";
-    return `images/${randomComponent}`;
+    if (_correctAnswers.includes(_answer)){
+      return generateImgLink();
+    } else {
+      return `images/${randomComponent}`;
+    }
   }
 }
 
 function displayImg() {
-  const link = generateImgLink();
-  const $imgAdd = document.querySelector("#addImageDiv");
-  $imgAdd.innerHTML = `<img src=${link} alt="rang">`;
-  console.log(link);
+  const $img = document.querySelector("img");
+  $img.src = generateImgLink();
 }
 
 function makeAnswerMarine(oType, random0Number, letter) {
@@ -170,16 +177,27 @@ function checkAnswer() {
 
   if (answerGiven.toLowerCase() === _answer.toLowerCase() || answerGiven.toLowerCase() === "Matroos".toLowerCase() && _answer.toLowerCase() === "Soldaat".toLowerCase()) {
     $answerP.innerHTML = `<strong>Correct!</strong>`;
+    _correctAnswers.push(_answer);
   } else {
     $answerP.innerHTML = `<em>Fout! Het antwoord was ${_answer}.</em>`;
   }
 }
 
+function clearAnswers() {
+  if (_correctAnswers.length / _RANKCOUNT <= 0.7) {
+    return;
+  }
+  _correctAnswers = [];
+}
+
 function checkInput(e) {
   e.preventDefault();
 
+  console.log(_correctAnswers);
+  console.log(_answer);
+
   checkAnswer();
+  clearAnswers();
   document.querySelector("input").value = "";
   displayImg();
-  console.log(_answer);
 }
