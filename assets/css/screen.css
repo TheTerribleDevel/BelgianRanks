@@ -42,12 +42,15 @@ form {
 
 /* regular tags */
 
-img {
-  max-width: 100%;
+div {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   margin: 0.5rem 0;
+}
+
+img {
+  max-width: 100%;
 }
 
 legend {
